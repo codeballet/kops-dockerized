@@ -15,6 +15,7 @@ All user-specific and secret variables (such as AWS credentials) are inserted in
 The below commands assume that you have configured your AWS account with a `kops` user account that has all the necessary policies, and that `kops` user is specified in your `.aws/credentials` file.
 
 For information about how to prepare your AWS user account and S3 storage, please see:
+
 [https://kops.sigs.k8s.io/getting_started/aws/](https://kops.sigs.k8s.io/getting_started/aws/)
 
 One tip to further 'dockerize' your world is to run aws-cli via Amazon's own official docker container:
