@@ -6,6 +6,8 @@ This Dockerfile builds an image that may be used to run Kops commands for creati
 
 The purpose of 'Kops Dockerized' is to not have to install kubectl and Kops on your local system, but instead, to simply run a Docker container with all the necessary packages and dependencies.
 
+Since the `ENTRYPOINT` of the Dockerfile is `kops`, you can simply enter any kops command directly after the complete `docker run...` command. See the below section 'Tips for ease of use' to create a convenient alias.
+
 The Docker file is based on Docker image `debian:11.1-slim`, and installs kubectl, kops, and aws-cli v2, together with some aws-cli dependencies (unzip, libc6, groff, and less).
 
 Additionally, Vim is installed in order to be able to view and edit configuration files from within the container. For instance, after having created a cluster, the command `kops edit cluster ${NAME}` will open the Vim editor and let you edit the cluster.
