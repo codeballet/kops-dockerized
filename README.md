@@ -24,7 +24,7 @@ docker run --rm -it \
     -e AWS_SECRET_ACCESS_KEY$(aws configure --profile kops get aws_secret_access_key) \
     -e NAME=mykopscluster.k8s.local \
     -e KOPS_STATE_STORE=s3://prefix-example-com-state-store \
-    codeballet/kops:latest
+    kops
 ```
 
 The above command includes the creation of all necessary environment variables that Kops needs. Please note that you need to adjust the values to match the name of your own cluster and chosen S3 state store.
