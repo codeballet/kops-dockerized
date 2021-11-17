@@ -79,7 +79,8 @@ docker run -rm -it --entrypoint=bash \
     -v ~/.aws:/root/.aws \
     -e AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY \
-    -e NAME -e KOPS_STATE_STORE \
+    -e NAME \
+    -e KOPS_STATE_STORE \
     kops
 ```
 
