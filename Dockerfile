@@ -1,5 +1,5 @@
 # use the image by running it with necessary environment variables (example):
-# docker run --rm -it -v ~/.aws:/root/.aws -e AWS_ACCESS_KEY_ID=$(aws configure --profile kops get aws_access_key_id) -e AWS_SECRET_ACCESS_KEY$(aws configure --profile kops get aws_secret_access_key) -e NAME=mykopscluster.k8s.local -e KOPS_STATE_STORE=s3://prefix-example-com-state-store codeballet/kops:latest
+# docker run --rm -it -v ~/.aws:/root/.aws -e AWS_ACCESS_KEY_ID=$(aws configure --profile kops get aws_access_key_id) -e AWS_SECRET_ACCESS_KEY$(aws configure --profile kops get aws_secret_access_key) -e NAME=mykopscluster.k8s.local -e KOPS_STATE_STORE=s3://prefix-example-com-state-store kops
 
 # run container and enter into bash:
 # docker run -rm -it --name=kops --entrypoint=bash -v ~/.aws:/root/.aws -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e NAME -e KOPS_STATE_STORE kops

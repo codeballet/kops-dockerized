@@ -2,7 +2,12 @@
 ## Description
 This Dockerfile builds an image that may be used to run Kops commands for creating Kubernetes clusters on AWS.
 
-The Docker file is based on Dockerimage debian:11.1-slim, and installs kubectl, kops, and aws cli v2. Additionally, vim is installed in order to be able to view and edit configuration files from within the container.
+The Docker file is based on Docker image `debian:11.1-slim`, and installs kubectl, kops, and aws cli v2, together with some AWS CLI dependencies (unzip, libc6, groff, and less).
+
+Additionally, Vim is installed in order to be able to view and edit configuration files from within the container. For instance, after having created a cluster, the command `kops edit cluster ${NAME}` will open the Vim editor and let you edit the cluster.
+
+## Security and secret credentials
+All user-specific and secret variables (such as AWS credentials) are inserted into the container at runtime, so there are no apparent security issues if running the container as described below.
 
 ## Prerequisites
 The below commands assumes that you have configured your AWS account with a `kops` user account that has all the necessary policies, and that `kops` user is specified in your `.aws/credentials` file.
@@ -27,7 +32,7 @@ docker run --rm -it \
     kops
 ```
 
-The above command includes the creation of all necessary environment variables that Kops needs. Please note that you need to adjust the values to match the name of your own cluster and chosen S3 state store.
+The above command includes the creation of all necessary environment variables that Kops needs. Please note that you need to adjust the environment variables' values to match the name of your own cluster and chosen S3 state store.
 
 
 ### Potential problem: line endings
@@ -41,7 +46,8 @@ docker run -rm -it --name=kops --entrypoint=bash \
     -v ~/.aws:/root/.aws \
     -e AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY \
-    -e NAME -e KOPS_STATE_STORE kops
+    -e NAME -e KOPS_STATE_STORE \
+    kops
 ```
 
 In that example, please note that you must have already created the necessary environment variables.
