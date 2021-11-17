@@ -18,7 +18,9 @@ For information about how to prepare your AWS user account and S3 storage, pleas
 [https://kops.sigs.k8s.io/getting_started/aws/](https://kops.sigs.k8s.io/getting_started/aws/)
 
 One tip to further 'dockerize' your world is to run aws-cli via Amazon's own official docker container:
+
 [https://hub.docker.com/r/amazon/aws-cli](https://hub.docker.com/r/amazon/aws-cli)
+
 With that image, you do not even have to install aws-cli on your local computer, but everything related to Kops and AWS may be run as Docker containers.
 
 ## Building and Running the Docker container
