@@ -2,7 +2,9 @@
 ## Description
 This Dockerfile builds an image that may be used to run Kops commands for creating Kubernetes clusters on AWS.
 
-The Docker file is based on Docker image `debian:11.1-slim`, and installs kubectl, kops, and aws cli v2, together with some AWS CLI dependencies (unzip, libc6, groff, and less).
+The purpose of 'Kops Dockerized' is to not have to install kubectl and Kops on your local system, but instead, to simply run a Docker container with all the necessary packages and dependencies.
+
+The Docker file is based on Docker image `debian:11.1-slim`, and installs kubectl, kops, and aws-cli v2, together with some aws-cli dependencies (unzip, libc6, groff, and less).
 
 Additionally, Vim is installed in order to be able to view and edit configuration files from within the container. For instance, after having created a cluster, the command `kops edit cluster ${NAME}` will open the Vim editor and let you edit the cluster.
 
@@ -10,11 +12,14 @@ Additionally, Vim is installed in order to be able to view and edit configuratio
 All user-specific and secret variables (such as AWS credentials) are inserted into the container at runtime, so there are no apparent security issues if running the container as described below.
 
 ## Prerequisites
-The below commands assumes that you have configured your AWS account with a `kops` user account that has all the necessary policies, and that `kops` user is specified in your `.aws/credentials` file.
+The below commands assume that you have configured your AWS account with a `kops` user account that has all the necessary policies, and that `kops` user is specified in your `.aws/credentials` file.
 
 For information about how to prepare your AWS user account and S3 storage, please see:
 [https://kops.sigs.k8s.io/getting_started/aws/](https://kops.sigs.k8s.io/getting_started/aws/)
 
+One tip to further 'dockerize' your world is to run aws-cli via Amazon's own official docker container:
+[https://hub.docker.com/r/amazon/aws-cli](https://hub.docker.com/r/amazon/aws-cli)
+With that image, you do not even have to install aws-cli on your local computer, but everything related to Kops and AWS may be run as Docker containers.
 
 ## Building and Running the Docker container
 The image may be build with the command:
@@ -50,7 +55,7 @@ docker run -rm -it --name=kops --entrypoint=bash \
     kops
 ```
 
-In that example, please note that you must have already created the necessary environment variables.
+In that example, please note that you must have already created the necessary environment variables in your environment.
 
 ## Tips for ease of use
 One easy way to use the container is to create an alias named `kops` for the docker run command you want to use. For instance:
