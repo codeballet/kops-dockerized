@@ -34,7 +34,7 @@ The built image may be run with the command:
 docker run --rm -it \
     -v ~/.aws:/root/.aws \
     -e AWS_ACCESS_KEY_ID=$(aws configure --profile kops get aws_access_key_id) \
-    -e AWS_SECRET_ACCESS_KEY$(aws configure --profile kops get aws_secret_access_key) \
+    -e AWS_SECRET_ACCESS_KEY=$(aws configure --profile kops get aws_secret_access_key) \
     -e NAME=mykopscluster.k8s.local \
     -e KOPS_STATE_STORE=s3://prefix-example-com-state-store \
     kops
