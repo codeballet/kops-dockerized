@@ -30,6 +30,8 @@ One tip to further 'dockerize' your world is to run aws-cli via Amazon's own off
 
 With that image, you do not even have to install aws-cli on your local computer, but everything related to Kops and AWS may be run as Docker containers.
 
+The below command also bind mounts `-v ~/.kube-container:/root/.kube`, which means that you will have access to the kubectl config file locally at `~/.kube-container/config`
+
 ## Building and Running the Docker container
 
 The image may be build with the command:
@@ -38,16 +40,23 @@ The image may be build with the command:
 The built image may be run with the command:
 
 ```
-docker run --rm -it \
-    -v ~/.aws:/root/.aws \
-    -e AWS_ACCESS_KEY_ID=$(aws configure --profile kops get aws_access_key_id) \
-    -e AWS_SECRET_ACCESS_KEY=$(aws configure --profile kops get aws_secret_access_key) \
-    -e NAME=mykopscluster.k8s.local \
-    -e KOPS_STATE_STORE=s3://prefix-example-com-state-store \
-    kops
+alias kops='docker run --rm -it \
+        -v ~/.aws:/root/.aws \
+        -v ~/.kube-container:/root/.kube \
+        -e AWS_ACCESS_KEY_ID=$(aws configure --profile kops get aws_access_key_id) \
+        -e AWS_SECRET_ACCESS_KEY=$(aws configure --profile kops get aws_secret_access_key) \
+        -e NAME=mykopscluster.k8s.local \
+        -e KOPS_STATE_STORE=s3://prefix-example-com-state-store \
+        kops'
 ```
 
 The above command includes the creation of all necessary environment variables that Kops needs. Please note that you need to adjust the environment variables' values to match the name of your own cluster and chosen S3 state store.
+
+### kubectl config file
+
+The kubectl configuration file `~/.kube/config` is being bind mounted to the local directory `~/.kube-container`. That is so that if you are running a kubectl configuration with another cluster already in the default location `~/.kube/config`, you could continue to do so. If you want to use the kubectl configuration generated inside the docker container, you may simply copy the generated config file from `~/.kube-container` to its default location `~/.kube` and then use kubectl as normally.
+
+Do note that you may have to change the user and file priviledges of the config file to make it accessible to your current user.
 
 ### Potential problem: line endings
 
